@@ -20,6 +20,7 @@ public class University {
         }
 
         student.setId(countId);
+        studentValueGenerator.generateAge();/*метод для мокиты*/
         student.setAge(studentValueGenerator.generateAge());
         allStudents.put(countId, student);
         countId++;

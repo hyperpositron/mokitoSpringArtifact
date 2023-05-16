@@ -41,7 +41,7 @@ public class UniversityTest {
         assertEquals(expected.get(0).getAge(), 50);
     }
 
-    @Test  // поведение метода с параметроми (Параметризированный метод)
+    @Test
     public void getAllStudentsOver50Years() {
         /* если нужно задать реакцию налюбой вызов этого метода не зависимо от аргументов нужно воспользоваться методом
          MockitoAny*/
@@ -55,4 +55,19 @@ public class UniversityTest {
         assertEquals(expected.get(0).getAge(), 55);
 
     }
+
+    @Test  /*Можем подсчитывать кол-во вызовов методов, т.е. проверять вызвался метод вообще или например проверять
+    что метод был вызван 2 раза иначе завершать тест с провалом.Для этого есть метод Mackito.verify()*/
+    public void getAllStudentsWithCountGenerate() {
+        assertNotNull(studentValueGenerator); // убедиться что генератор не null
+
+        Mockito.when(studentValueGenerator.generateAge()).thenReturn(50);
+        university.addStudent(student);
+        List<Student> expected = university.getAllStudents();
+        assertEquals(expected.get(0).getAge(), 50);
+        /* и добавим её в конец теста */
+        Mockito.verify(studentValueGenerator,Mockito.times(2)).generateAge();/* попросим
+        Mockito проследить что бы метод был вызван 2 раза допишем Mockito.times(2)*/
+    }
+
 }
