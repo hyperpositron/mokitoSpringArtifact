@@ -3,8 +3,10 @@ package com.mokitoSpringGroup.mokitoSpringArtifact;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.internal.InOrderImpl;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -12,6 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @ExtendWith(MockitoExtension.class) // что бы анатация Mokito (@Mock) работала без дополнительных настроек
 public class UniversityTest {
@@ -68,6 +71,22 @@ public class UniversityTest {
         /* и добавим её в конец теста */
         Mockito.verify(studentValueGenerator,Mockito.times(2)).generateAge();/* попросим
         Mockito проследить что бы метод был вызван 2 раза допишем Mockito.times(2)*/
+    }
+
+    @Test  /*Проверить вызовов методов в правельной последовательности */
+    public void getAllStudentsInOrder() {
+        Mockito.when(studentValueGenerator.generateAgeInRange(50,100)).thenReturn(55);
+
+        university.addStudentInRange(student,50,100);
+
+        InOrder inOrder = Mockito.inOrder(studentValueGenerator);
+
+        List<Student> expected = university.getAllStudents();
+
+        inOrder.verify(studentValueGenerator,times (2)).generateAge();
+        inOrder.verify(studentValueGenerator).generateAgeInRange(anyInt(),anyInt());
+
+        assertEquals(expected.get(0).getAge(), 55);
     }
 
 }

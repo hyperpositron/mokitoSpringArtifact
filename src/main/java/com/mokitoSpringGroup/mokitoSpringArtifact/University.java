@@ -30,6 +30,8 @@ public class University {
         if (allStudents == null) {
             allStudents = new HashMap<>();
         }
+        studentValueGenerator.generateAge();/*метод для теста getAllStudentsInOrder()*/
+        studentValueGenerator.generateAge();/*метод для теста getAllStudentsInOrder()*/
         student.setId(countId);
         student.setAge(studentValueGenerator.generateAgeInRange(minYear, maxYear));
         allStudents.put(countId, student);
