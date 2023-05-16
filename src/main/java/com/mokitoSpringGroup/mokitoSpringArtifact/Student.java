@@ -27,7 +27,7 @@ public class Student {
         this.name = name;
     }
 
-    public int age() {
+    public int getAge() {
         return age;
     }
 
