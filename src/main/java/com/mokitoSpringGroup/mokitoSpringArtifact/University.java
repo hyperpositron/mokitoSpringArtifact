@@ -27,12 +27,14 @@ public class University {
 
     public void addStudentInRange(Student student, int minYear, int maxYear) {
         if (allStudents == null) {
-            allStudents = new HashMap<Integer, Student>();
+            allStudents = new HashMap<>();
         }
         student.setId(countId);
+        student.setAge(studentValueGenerator.generateAgeInRange(minYear, maxYear));
         allStudents.put(countId, student);
         countId++;
     }
+
 
     public List<Student> getAllStudents() {
         return new ArrayList<Student>(allStudents.values());
