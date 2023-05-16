@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.internal.InOrderImpl;
@@ -18,6 +19,13 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @ExtendWith(MockitoExtension.class) // что бы анатация Mokito (@Mock) работала без дополнительных настроек
 public class UniversityTest {
+    /*@InjectMocks Обьект указанного класса ,его поля по возможности проинициализированны значениями мок полей
+    помеченной соответствующей аннотацией для этого используется констируктор с наибольшим числом параметров
+    СЕТТЕРЫ и т.д. Если какого то объектного параметра конструктора не хватает в место него будет использован
+    null, а парамерт примитив просто не позволит тесту сработать. Вцелом это похоже намаленькую и простую
+    реализацию Внедрение зависимости (Dependency injection) так например University автоматически был
+      инициализирован путем вызова конструктора, а так как в конструкторе необходим один параметр класс
+      генератор мокито и передаст туда МОК нашего класса генератора создапнного в этом тесте*/
     private final Student student = new Student("Александр", true);
     @Mock // заглушка для класса studentValueGenerator
     private StudentValueGenerator studentValueGenerator;
